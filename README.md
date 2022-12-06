@@ -23,7 +23,7 @@ The source code of all [StarRocks](https://www.starrocks.io/) community [Helm](h
 ## License
 
 <!-- Keep full URL links to repo files because this README syncs from main to gh-pages.  -->
-[Apache 2.0 License](https://github.com/prometheus-community/helm-charts/blob/main/LICENSE).
+[Apache 2.0 License](https://github.com/StarRocks/helm-charts/blob/main/LICENSE).
 
 ## Helm charts build status
 
