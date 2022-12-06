@@ -1,0 +1,34 @@
+apiVersion: starrocks.com/v1alpha1
+kind: StarRocksCluster
+metadata:
+  name: {{ template "starrockscluster.name" . }}
+  namespace: {{ template "starrockscluster.namespace" . }}
+  labels:
+    cluster: {{ template "starrockscluster.name" . }}
+spec:
+  starRocksFeSpec:
+    image: "{{ .Values.starrocksFESpec.image.repository }}:{{ .Values.starrocksFESpec.image.tag }}"
+    replicas: {{ .Values.starrocksFESpec.replicas }}
+{{- if .Values.starrocksFESpec.resources }}
+{{ toYaml .Values.starrocksFESpec.resources | indent 4 }}
+{{- end }}
+
+{{- if .Values.starrocksBeSpec }}
+  starRocksBeSpec:
+    image: "{{ .Values.starrocksBeSpec.image.repository }}:{{ .Values.starrocksBeSpec.image.tag }}"
+    replicas: {{ .Values.starrocksBeSpec.replicas }}
+{{- if .Values.starrocksBeSpec.resource }}
+{{ toYaml .Values.starrocksBeSpec.resource | indent 4 }}
+{{- end }}
+{{- end }}
+
+{{- if .Values.starrocksCluster.enabledCn }}
+  starRocksCnSpec:
+    image: "{{ .Values.starrocksCnSpec.image.repository }}:{{ .Values.starrocksCnSpec.image.tag }}"
+  {{- if and .Values.starrocksCluster.enabledCn .Values.starrocksCnSpec.autoScalingPolicy }}
+    autoScalingPolicy:
+{{ toYaml .Values.starrocksCnSpec.autoScalingPolicy | indent 6 }}
+  {{- end }}
+{{ toYaml .Values.starrocksCnSpec.resource | indent 4 }}
+
+{{- end }}
