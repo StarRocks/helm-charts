@@ -38,7 +38,7 @@ starrocksCluster:
   annotations: {}
   labels:
     object: test
-  ## TODO: 解析作用
+  ## specify the cn deploy or not.
   enabledCn: true
 
 ##  fe spec to deploy fe components.
@@ -47,11 +47,9 @@ starrocksFESpec:
   replicas: 1
   image:
     registry: hub.docker
-    ## TODO: 需要待调整
-    repository: 172.26.92.212:32000/fe.demo
-    tag: v1.0
+    repository: starrocks/alpine-fe
+    tag: 2.4.1
   ## specify the service name and port config.
-  ##TODO: helper指定默认值
   serviceName: ""
   # resource config for fe components.
   ## TODO: 待定
@@ -67,9 +65,8 @@ starrocksFESpec:
   storageSpec: {}
   ## specify storageclass name and request size.
   # name: fe-meta-storage
-  # TODO: mountpath使用default指定传入
   # storageSize: 10Gi
-  # TODO: 设置default configmapName
+  # TODO:set default configmapName
   configMapName: ""
   config: |
     LOG_DIR = ${STARROCKS_HOME}/log
@@ -87,8 +84,8 @@ starrocksFESpec:
 starrocksCnSpec:
   image:
     registry: hub.docker
-    repository: 172.26.92.212:32000/cn.demo
-    tag: v2.1
+    repository: starrocks/centos-cn
+    tag: 2.4.1
   autoScalingPolicy:
     maxReplicas: 10
     minReplicas: 1
@@ -139,9 +136,8 @@ starrocksBeSpec:
   replicas: 1
   image:
     registry: hub.docker
-      ## TODO: 需要待调整
-    repository: starrocks/centos-fe
-    tag: v1.0
+    repository: starrocks/centos-be
+    tag: 2.4.1
   resource:
     requests:
       cpu: 4
@@ -153,7 +149,6 @@ starrocksBeSpec:
   storageSpec: {}
   ## specify storageclass name and request size.
   # name: fe-meta-storage
-  # TODO: mountpath使用default指定传入
   # storageSize: 10Gi
   config: |
     be_port = 9060
