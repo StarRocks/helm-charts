@@ -27,4 +27,4 @@ The source code of all [StarRocks](https://www.starrocks.io/) community [Helm](h
 
 ## Helm charts build status
 
-[![Release Charts](https://img.shields.io/github/release/StarRocks/helm-charts.svg)](https://github.com/StarRocks/helm-charts/releases)
+[![Release Charts](https://img.shields.io/github/Download-StarRocks-helmcharts.svg)](https://github.com/StarRocks/helm-charts/releases)
