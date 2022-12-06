@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="9d489810-94e6-4cc8-8341-9d592dfd3beb" name="ca">
+        <fileTransfer rootFolder="/home/disk2/fushilei/gocode/src" accessType="SFTP" host="47.92.130.86" port="22" sshConfigId="50b94037-676a-409b-bb20-1737f221b9cf" sshConfig="fushilei@47.92.130.86:22 agent" authAgent="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
