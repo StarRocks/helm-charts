@@ -1,5 +1,5 @@
 # StarRocks Kubernetes Helm Charts
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Release Charts](https://img.shields.io/github/release/StarRocks/helm-charts.svg)](https://github.com/StarRocks/helm-charts/releases) [![Releases downloads](https://img.shields.io/github/downloads/StarRocks/helm-charts/total.svg)](https://github.com/StarRocks/helm-charts/releases)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Release Charts](https://img.shields.io/badge/Release-helmcharts-green.svg)](https://github.com/StarRocks/helm-charts/releases)
 
 This functionality is in beta and is subject to change. The code is provided as-is with no warranties.  Beta features are not subject to the support SLA of official GA features.
 
