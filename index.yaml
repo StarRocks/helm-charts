@@ -27,6 +27,6 @@ entries:
     - https://github.com/StarRocks/starrocks-kubernetes-operator
     type: application
     urls:
-    - https://github.com/StarRocks/helm-charts/releases/download/kube-starrocks-1.1.0/kube-starrocks-1.1.0.tgz
+    - https://github.com/shileifu/helm-charts/releases/download/kube-starrocks-1.1.0/kube-starrocks-1.1.0.tgz
     version: 1.1.0
-generated: "2022-12-06T09:25:35.73906994Z"
+generated: "2022-12-06T09:20:20.658142873Z"
