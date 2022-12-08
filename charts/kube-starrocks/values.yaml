@@ -15,8 +15,8 @@ starrocksOperator:
   namespaceOverride: ""
   image:
     registry: hub.docker
-    repository: 172.26.92.212:32000/operator
-    tag: v4.5
+    repository: starrocks/centos-operator
+    tag: v1.0
   resources:
     limits:
       cpu: 500m
