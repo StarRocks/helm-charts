@@ -1,7 +1,8 @@
 apiVersion: v2
 name: kube-starrocks
 description: kube-starrocks collects Kubernetes manifests, starrocks combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster deploy starrocks using the starrocks operator.
-icon: https://github.com/StarRocks/starrocks/blob/main/images/logo.png
+icon: https://raw.githubusercontent.com/StarRocks/starrocks/main/images/logo.png
+
 # A chart can be either an 'application' or a 'library' chart.
 #
 # Application charts are a collection of templates that can be packaged into versioned archives
