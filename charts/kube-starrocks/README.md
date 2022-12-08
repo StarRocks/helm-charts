@@ -41,7 +41,7 @@ CRDs created by this chart are not removed by default and should be manually cle
 See [Customizing the Chart Before Installing](https://helm.sh/docs/intro/using_helm/#customizing-the-chart-before-installing). To see all configurable options with detailed comments:
 
 ```console
-helm show values starrocks-communityg/kube-starrocks
+helm show values starrocks-community/kube-starrocks
 ```
 
 ## Documentation
