@@ -3,6 +3,36 @@ entries:
   kube-starrocks:
   - apiVersion: v2
     appVersion: 2.4.1
+    created: "2022-12-08T08:48:30.94053643Z"
+    description: kube-starrocks collects Kubernetes manifests, starrocks combined
+      with documentation and scripts to provide easy to operate end-to-end Kubernetes
+      cluster deploy starrocks using the starrocks operator.
+    digest: 1aeb7ccdbf68c8365f80a03ff98a2964ba960c4afae99b8fc6135f3ec4e85f8b
+    home: https://github.com/StarRocks/starrocks-kubernetes-operator
+    icon: https://raw.githubusercontent.com/StarRocks/starrocks/main/images/logo.png
+    keywords:
+    - operator
+    - starrocks
+    - kube-starrocks
+    - database
+    kubeVersion: '>=1.18.3-0'
+    maintainers:
+    - email: caixiaohua@starrocks.com
+      name: Kevin Cai
+    - email: shensida@starrocks.com
+      name: SidaShen
+    - email: fushilei@starrocks.com
+      name: ShileiFu
+    name: kube-starrocks
+    sources:
+    - https://github.com/StarRocks/helm-charts
+    - https://github.com/StarRocks/starrocks-kubernetes-operator
+    type: application
+    urls:
+    - https://github.com/StarRocks/helm-charts/releases/download/kube-starrocks-1.2.0/kube-starrocks-1.2.0.tgz
+    version: 1.2.0
+  - apiVersion: v2
+    appVersion: 2.4.1
     created: "2022-12-06T09:25:35.739057439Z"
     description: kube-starrocks collects Kubernetes manifests, starrocks combined
       with documentation and scripts to provide easy to operate end-to-end Kubernetes
@@ -29,4 +59,4 @@ entries:
     urls:
     - https://github.com/shileifu/helm-charts/releases/download/kube-starrocks-1.1.0/kube-starrocks-1.1.0.tgz
     version: 1.1.0
-generated: "2022-12-06T09:20:20.658142873Z"
+generated: "2022-12-08T08:48:30.940542831Z"
