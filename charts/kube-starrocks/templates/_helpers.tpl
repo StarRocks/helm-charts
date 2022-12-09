@@ -7,7 +7,7 @@ Expand the name of the chart.
 
 
 {{- define "kube-starrocks.operator.namespace" -}}
-{{- default "starrocks" .Values.starrocksOperator.namespaceOverride }}
+{{- default .Release.Namespace .Values.starrocksOperator.namespaceOverride }}
 {{- end }}
 
 
