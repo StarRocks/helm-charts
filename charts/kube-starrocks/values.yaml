@@ -47,7 +47,7 @@ starrocksFESpec:
   replicas: 1
   image:
     registry: hub.docker
-    repository: starrocks/alpine-fe
+    repository: starrocks/fe
     tag: 2.4.1
   ## specify the service name and port config.
   serviceName: ""
@@ -83,7 +83,7 @@ starrocksFESpec:
 starrocksCnSpec:
   image:
     registry: hub.docker
-    repository: starrocks/centos-cn
+    repository: starrocks/cn
     tag: 2.4.1
   autoScalingPolicy:
     maxReplicas: 10
@@ -135,7 +135,7 @@ starrocksBeSpec:
   replicas: 1
   image:
     registry: hub.docker
-    repository: starrocks/centos-be
+    repository: starrocks/be
     tag: 2.4.1
   resource:
     requests:
