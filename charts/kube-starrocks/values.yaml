@@ -29,7 +29,7 @@ starrocksOperator:
 # deploy a starrocks cluster
 starrocksCluster:
   # Provide a name for starprocks cluster
-  name: "fsl-test"
+  name: ""
   ## service account for fe and be to use.
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
   serviceAccount: ""
@@ -52,7 +52,6 @@ starrocksFESpec:
   ## specify the service name and port config.
   serviceName: ""
   # resource config for fe components.
-  ## TODO: 待定
   resources:
     requests:
       cpu: 4

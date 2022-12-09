@@ -14,8 +14,13 @@ _See [`helm repo`](https://helm.sh/docs/helm/helm_repo/) for command documentati
 
 ## Install Helm Chart
 
+1. view the package names in repo.
 ```console
-helm install [RELEASE_NAME] starrocks-community https://starrocks.github.io/helm-charts
+helm search repo starrocks-community
+```
+2. install specify package.
+```console
+helm install [RELEASE_NAME] starrocks-community/[PACKAGE_NAME]
 ```
 
 _See [configuration](#configuration) below._

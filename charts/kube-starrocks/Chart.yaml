@@ -23,7 +23,7 @@ maintainers:
 # This is the chart version. This version number should be incremented each time you make changes
 
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 1.2.1
+version: 1.2.2
 
 # This is the version number of tlhe application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
@@ -36,8 +36,8 @@ kubeVersion: ">=1.18.3-0"
 keywords:
   - operator
   - starrocks
-  - kube-starrocks
   - database
+  - olap
 
 sources:
   - https://github.com/StarRocks/helm-charts
