@@ -36,8 +36,8 @@ kubeVersion: ">=1.18.3-0"
 keywords:
   - operator
   - starrocks
-  - kube-starrocks
   - database
+  - olap
 
 sources:
   - https://github.com/StarRocks/helm-charts
