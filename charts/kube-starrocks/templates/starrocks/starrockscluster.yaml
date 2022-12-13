@@ -12,6 +12,15 @@ spec:
 {{- if .Values.starrocksFESpec.resources }}
 {{ toYaml .Values.starrocksFESpec.resources | indent 4 }}
 {{- end }}
+{{- if or .Values.starrocksFESpec.service.name .Values.starrocksFESpec.service.type }}
+    service:
+{{- if .Values.starrocksFESpec.service.name }}
+      name: {{ .Values.starrocksFESpec.service.name }}
+{{- end }}
+{{- if .Values.starrocksFESpec.service.type }}
+      type: {{ .Values.starrocksFESpec.service.type }}
+{{- end }}
+{{- end }}
 
 {{- if .Values.starrocksBeSpec }}
   starRocksBeSpec:

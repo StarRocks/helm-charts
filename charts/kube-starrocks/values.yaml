@@ -49,8 +49,14 @@ starrocksFESpec:
     registry: hub.docker
     repository: starrocks/fe
     tag: 2.4.1
-  ## specify the service name and port config.
-  serviceName: ""
+  ## specify the service name and port config and serviceType
+  ## the service type refer https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+  service:
+    ## the service name for access by user.
+    name: ""
+    ## the fe service type, only supported ClusterIP, NodePort, LoadBalancer, ExternalName
+    type: ""
+
   # resource config for fe components.
   resources:
     requests:
