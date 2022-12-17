@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{template "starrockscluster.cn.name" }}-cm
+  name: {{ template "starrockscluster.cn.configmap.name" . }}
   namespace: {{ template "starrockscluster.namespace" . }}
   labels:
     cluster: {{ template "kube-starrocks.name" . }}

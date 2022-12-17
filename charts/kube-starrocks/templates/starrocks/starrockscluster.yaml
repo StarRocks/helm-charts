@@ -5,6 +5,7 @@ metadata:
   namespace: {{ template "starrockscluster.namespace" . }}
   labels:
     cluster: {{ template "starrockscluster.name" . }}
+{{- include "kube-starrocks.labels" . | nindent 4 }}
 spec:
   starRocksFeSpec:
     image: "{{ .Values.starrocksFESpec.image.repository }}:{{ .Values.starrocksFESpec.image.tag }}"
@@ -12,14 +13,20 @@ spec:
 {{- if .Values.starrocksFESpec.resources }}
 {{ toYaml .Values.starrocksFESpec.resources | indent 4 }}
 {{- end }}
-{{- if or .Values.starrocksFESpec.service.name .Values.starrocksFESpec.service.type }}
+{{- if .Values.starrocksFESpec.service.type }}
     service:
-{{- if .Values.starrocksFESpec.service.name }}
-      name: {{ .Values.starrocksFESpec.service.name }}
-{{- end }}
 {{- if .Values.starrocksFESpec.service.type }}
       type: {{ .Values.starrocksFESpec.service.type }}
 {{- end }}
+{{- end }}
+    configMapInfo:
+      configMapName: {{template  "starrockscluster.fe.configmap.name" . }}
+      resolveKey: fe.conf
+{{- if .Values.starrocksFESpec.storageSpec.name }}
+    storageVolumes:
+    - name: {{ .Values.starrocksFESpec.storageSpec.name }}
+      storageSize: {{ .Values.starrocksFESpec.storageSpec.storageSize }}
+      mountPath: {{template "starrockscluster.fe.meta.path" . }}
 {{- end }}
 
 {{- if .Values.starrocksBeSpec }}
@@ -28,6 +35,15 @@ spec:
     replicas: {{ .Values.starrocksBeSpec.replicas }}
 {{- if .Values.starrocksBeSpec.resource }}
 {{ toYaml .Values.starrocksBeSpec.resource | indent 4 }}
+{{- end }}
+    configMapInfo:
+      configMapName: {{template "starrockscluster.be.configmap.name" . }}
+      resolveKey: be.conf
+{{- if .Values.starrocksBeSpec.storageSpec.name }}
+    storageVolumes:
+    - name: {{ .Values.starrocksFESpec.storageSpec.name }}
+      storageSize: {{ .Values.starrocksBeSpec.storageSpec.storageSize }}
+      mountPath: {{template "starrockscluster.be.data.path" . }}
 {{- end }}
 {{- end }}
 
@@ -39,5 +55,7 @@ spec:
 {{ toYaml .Values.starrocksCnSpec.autoScalingPolicy | indent 6 }}
   {{- end }}
 {{ toYaml .Values.starrocksCnSpec.resource | indent 4 }}
-
+    configMapInfo:
+      configMapName: {{template  "starrockscluster.cn.configmap.name" . }}
+      resolveKey: cn.conf
 {{- end }}

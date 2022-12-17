@@ -9,7 +9,7 @@ spec:
   selector:
     matchLabels:
       app: {{ template "kube-starrocks.name" . }}-operator
-      version: {{ $.Release.Name | quote }}
+      version: {{ $.Chart.Version }}
   replicas: 1
   template:
     metadata:
@@ -17,7 +17,7 @@ spec:
         kubectl.kubernetes.io/default-container: manager
       labels:
         app: {{ template "kube-starrocks.name" . }}-operator
-        version: {{ $.Release.Name | quote }}
+        version: {{ $.Chart.Version }}
     spec:
       securityContext:
         runAsNonRoot: false
