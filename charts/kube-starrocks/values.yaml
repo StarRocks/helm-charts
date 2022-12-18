@@ -37,11 +37,12 @@ starrocksCluster:
   ## annotations for starrocks cluster
   annotations: {}
   labels:
-    object: test
+    object: starrocks
   ## specify the cn deploy or not.
-  enabledCn: true
+  enabledCn: false
 
-##  fe spec to deploy fe components.
+
+## spec to deploy fe.
 starrocksFESpec:
   ## Number of replicas to deploy for a fe statefulset.
   replicas: 1
@@ -52,11 +53,8 @@ starrocksFESpec:
   ## specify the service name and port config and serviceType
   ## the service type refer https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
   service:
-    ## the service name for access by user.
-    name: ""
     ## the fe service type, only supported ClusterIP, NodePort, LoadBalancer, ExternalName
-    type: ""
-
+    type: "ClusterIP"
   # resource config for fe components.
   resources:
     requests:
@@ -64,15 +62,16 @@ starrocksFESpec:
       memory: 4Gi
     limits:
       cpu: 8
-      memory: 16Gi
+      memory: 8Gi
 
   # fe storageSpec for persistent meta data.
-  storageSpec: {}
-  ## specify storageclass name and request size.
-  # name: fe-meta-storage
-  # storageSize: 10Gi
-  # TODO:set default configmapName
-  configMapName: ""
+  storageSpec:
+    # the storageClass name for fe meta persistent volume. if name is empty used emptyDir.
+    name: ""
+    #the persistent volume size default 1 Gi.
+    storageSize: 1Gi
+
+  ## the config for start fe. the base information as follows.
   config: |
     LOG_DIR = ${STARROCKS_HOME}/log
     DATE = "$(date +%Y%m%d-%H%M%S)"
@@ -91,31 +90,32 @@ starrocksCnSpec:
     registry: hub.docker
     repository: starrocks/cn
     tag: 2.4.1
-  autoScalingPolicy:
-    maxReplicas: 10
-    minReplicas: 1
-    hpaPolicy:
-      metrics:
-        - type: Resource
-          resource:
-            name: memory
-            target:
-              averageUtilization: 30
-              type: Utilization
-        - type: Resource
-          resource:
-            name: cpu
-            target:
-              averageUtilization: 30
-              type: Utilization
-      behavior:
-        scaleUp:
-          policies:
-            - type: Pods
-              value: 1
-              periodSeconds: 10
-        scaleDown:
-          selectPolicy: Disabled
+  autoScalingPolicy: {}
+  # maxReplicas: 10
+  # minReplicas: 1
+  # hpaPolicy:
+  #   metrics:
+  #     - type: Resource
+  #       resource:
+  #         name: memory
+  #         target:
+  #           averageUtilization: 30
+  #           type: Utilization
+  #     - type: Resource
+  #       resource:
+  #         
+  #         name: cpu
+  #         target:
+  #           averageUtilization: 30
+  #           type: Utilization
+  #   behavior:
+  #     scaleUp:
+  #       policies:
+  #         - type: Pods
+  #           value: 1
+  #           periodSeconds: 10
+  #     scaleDown:
+  #       selectPolicy: Disabled
 
   ## define resources requests and limits for cn pods.
   resource:
@@ -125,7 +125,7 @@ starrocksCnSpec:
     requests:
       cpu: 4
       memory: 8Gi
-  feServiceName: ""
+  # the config start for cn, the base information as follows.
   config: |
     sys_log_level = INFO
     # ports for admin, web, heartbeat service
@@ -149,12 +149,14 @@ starrocksBeSpec:
       memory: 4Gi
     limits:
       cpu: 8
-      memory: 16Gi
-
-  storageSpec: {}
+      memory: 8Gi
   ## specify storageclass name and request size.
-  # name: fe-meta-storage
-  # storageSize: 10Gi
+  storageSpec:
+    # the storageClass name for be data persistent volume. if name is empty used emptyDir.
+    name: ""
+    storageSize: 10Gi
+
+  # the config for start be. the base information as follows.
   config: |
     be_port = 9060
     webserver_port = 8040
