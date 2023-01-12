@@ -41,7 +41,7 @@ spec:
       resolveKey: be.conf
 {{- if .Values.starrocksBeSpec.storageSpec.name }}
     storageVolumes:
-    - name: {{ .Values.starrocksFESpec.storageSpec.name }}
+    - name: {{ .Values.starrocksBeSpec.storageSpec.name }}
       storageSize: {{ .Values.starrocksBeSpec.storageSpec.storageSize }}
       mountPath: {{template "starrockscluster.be.data.path" . }}
 {{- end }}
