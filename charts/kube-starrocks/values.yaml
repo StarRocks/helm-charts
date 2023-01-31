@@ -16,7 +16,7 @@ starrocksOperator:
   image:
     registry: hub.docker
     repository: starrocks/operator
-    tag: v1.1
+    tag: v1.3
   resources:
     limits:
       cpu: 500m
@@ -30,32 +30,75 @@ starrocksOperator:
 starrocksCluster:
   # Provide a name for starprocks cluster
   name: ""
-  ## service account for fe and be to use.
-  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
-  serviceAccount: ""
   namespace: ""
-  ## annotations for starrocks cluster
+  # annotations for starrocks cluster
   annotations: {}
   labels:
     object: starrocks
-  ## specify the cn deploy or not.
+  # specify the cn deploy or not.
   enabledCn: false
 
 
-## spec to deploy fe.
+# spec to deploy fe.
 starrocksFESpec:
-  ## Number of replicas to deploy for a fe statefulset.
+  # Number of replicas to deploy for a fe statefulset.
   replicas: 1
   image:
     registry: hub.docker
-    repository: starrocks/fe
-    tag: 2.4.1
-  ## specify the service name and port config and serviceType
-  ## the service type refer https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+    repository: starrocks/fe-ubuntu
+    tag: 2.5.0-fix-uid
+  # A special supplemental group that applies to all containers in a pod. Some volume types allow the Kubelet to change the ownership of that volume to be owned by the pod:
+  # Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#configure-volume-permission-and-ownership-change-policy-for-pods
+  fsGroup: 1000
+
+  # specify the service name and port config and serviceType
+  # the service type refer https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
   service:
-    ## the fe service type, only supported ClusterIP, NodePort, LoadBalancer, ExternalName
+    # the fe service type, only supported ClusterIP, NodePort, LoadBalancer, ExternalName
     type: "ClusterIP"
-  # resource config for fe components.
+  # serviceAccount for fe access cloud service.
+  #serviceAccount: starrocks
+
+  # If specified, the pod's nodeSelector，displayName="Map of nodeSelectors to match when scheduling pods on nodes"
+  # Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
+  nodeSelector: {}
+  #  beta.kubernetes.io/arch: amd64
+  #  beta.kubernetes.io/os: linux
+
+  # Additional fe container environment variables
+  # You specify this manually like you would a raw deployment manifest.
+  # This means you can bind in environment variables from secrets.
+  # Ref: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
+  feEnvVars: []
+  # e.g. static environment variable:
+  #  - name: DEMO_GREETING
+  #    value: "Hello from the environment"
+  #
+  # e.g. secret environment variable:
+  #  - name: USERNAME
+  #    valueFrom:
+  #      secretKeyRef:
+  #        name: mysecret
+  #        key: username
+
+  # Pod affinity
+  affinity: {}
+  #  nodeAffinity:
+  #    requiredDuringSchedulingIgnoredDuringExecution:
+  #      nodeSelectorTerms:
+  #        - matchFields:
+  #            - key: metadata.name
+  #              operator: In
+  #              values:
+  #                - target-host-name
+
+  # Node tolerations for fe pod scheduling to nodes with taints
+  # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+  tolerations: []
+  #  - key: "key"
+  #    operator: "Equal|Exists"
+  #    value: "value"
+  #    effect: "NoSchedule|PreferNoSchedule|NoExecute(1.6 only)"
   resources:
     requests:
       cpu: 4
@@ -71,7 +114,7 @@ starrocksFESpec:
     #the persistent volume size default 1 Gi.
     storageSize: 1Gi
 
-  ## the config for start fe. the base information as follows.
+  # the config for start fe. the base information as follows.
   config: |
     LOG_DIR = ${STARROCKS_HOME}/log
     DATE = "$(date +%Y%m%d-%H%M%S)"
@@ -84,40 +127,88 @@ starrocksFESpec:
     mysql_service_nio_enabled = true   
     sys_log_level = INFO
 
-# spec for compute node, compute node provide compute function.
+## spec for compute node, compute node provide compute function.
 starrocksCnSpec:
   image:
     registry: hub.docker
-    repository: starrocks/cn
-    tag: 2.4.1
-  autoScalingPolicy: {}
-  # maxReplicas: 10
-  # minReplicas: 1
-  # hpaPolicy:
-  #   metrics:
-  #     - type: Resource
-  #       resource:
-  #         name: memory
-  #         target:
-  #           averageUtilization: 30
-  #           type: Utilization
-  #     - type: Resource
-  #       resource:
-  #         
-  #         name: cpu
-  #         target:
-  #           averageUtilization: 30
-  #           type: Utilization
-  #   behavior:
-  #     scaleUp:
-  #       policies:
-  #         - type: Pods
-  #           value: 1
-  #           periodSeconds: 10
-  #     scaleDown:
-  #       selectPolicy: Disabled
+    repository: starrocks/be-ubuntu
+    tag: 2.5.0
+  # serviceAccount for cn access cloud service.
+  #serviceAccount: starrocks
 
-  ## define resources requests and limits for cn pods.
+  # A special supplemental group that applies to all containers in a pod. Some volume types allow the Kubelet to change the ownership of that volume to be owned by the pod:
+  # Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#configure-volume-permission-and-ownership-change-policy-for-pods
+  fsGroup: 1000
+
+  # If specified, the pod's nodeSelector，displayName="Map of nodeSelectors to match when scheduling pods on nodes"
+  # Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
+  nodeSelector: {}
+  #  beta.kubernetes.io/arch: amd64
+  #  beta.kubernetes.io/os: linux
+
+  # Additional cn container environment variables
+  # You specify this manually like you would a raw deployment manifest.
+  # This means you can bind in environment variables from secrets.
+  # Ref: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
+  cnEnvVars: []
+  # e.g. static environment variable:
+  #  - name: DEMO_GREETING
+  #    value: "Hello from the environment"
+  # e.g. secret environment variable:
+  #  - name: USERNAME
+  #    valueFrom:
+  #      secretKeyRef:
+  #        name: mysecret
+  #        key: username
+
+  # Pod affinity
+  affinity: {}
+  #  nodeAffinity:
+  #    requiredDuringSchedulingIgnoredDuringExecution:
+  #      nodeSelectorTerms:
+  #        - matchFields:
+  #            - key: metadata.name
+  #              operator: In
+  #              values:
+  #                - target-host-name
+
+
+  # Node tolerations for cn pod scheduling to nodes with taints
+  # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+  tolerations: []
+  #  - key: "key"
+  #    operator: "Equal|Exists"
+  #    value: "value"
+  #    effect: "NoSchedule|PreferNoSchedule|NoExecute(1.6 only)"
+
+  autoScalingPolicy: {}
+  #  maxReplicas: 10
+  #  minReplicas: 1
+  #  hpaPolicy:
+  #    metrics:
+  #      - type: Resource
+  #        resource:
+  #          name: memory
+  #          target:
+  #            averageUtilization: 30
+  #            type: Utilization
+  #      - type: Resource
+  #        resource:
+  #          
+  #          name: cpu
+  #          target:
+  #            averageUtilization: 30
+  #            type: Utilization
+  #    behavior:
+  #      scaleUp:
+  #        policies:
+  #          - type: Pods
+  #            value: 1
+  #            periodSeconds: 10
+  #      scaleDown:
+  #        selectPolicy: Disabled
+
+  # define resources requests and limits for cn pods.
   resource:
     limits:
       cpu: 8
@@ -141,8 +232,57 @@ starrocksBeSpec:
   replicas: 1
   image:
     registry: hub.docker
-    repository: starrocks/be
-    tag: 2.4.1
+    repository: starrocks/be-ubuntu
+    tag: 2.5.0-fix-uid
+  ## serviceAccount for be access cloud service.
+  #serviceAccount: starrocks
+
+  # A special supplemental group that applies to all containers in a pod. Some volume types allow the Kubelet to change the ownership of that volume to be owned by the pod:
+  # Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#configure-volume-permission-and-ownership-change-policy-for-pods
+  fsGroup: 1000
+
+  # If specified, the pod's nodeSelector，displayName="Map of nodeSelectors to match when scheduling pods on nodes"
+  # Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
+  nodeSelector: {}
+  #  beta.kubernetes.io/arch: amd64
+  #  beta.kubernetes.io/os: linux
+
+  # Additional be container environment variables
+  # You specify this manually like you would a raw deployment manifest.
+  # This means you can bind in environment variables from secrets.
+  #
+  # Ref: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
+  beEnvVars: []
+  # e.g. static environment variable:
+  #  - name: DEMO_GREETING
+  #    value: "Hello from the environment"
+  #
+  # e.g. secret environment variable:
+  #  - name: USERNAME
+  #    valueFrom:
+  #      secretKeyRef:
+  #        name: mysecret
+  #        key: username
+
+  ## Pod affinity
+  affinity: {}
+  #  nodeAffinity:
+  #    requiredDuringSchedulingIgnoredDuringExecution:
+  #      nodeSelectorTerms:
+  #        - matchFields:
+  #            - key: metadata.name
+  #              operator: In
+  #              values:
+  #                - target-host-name
+
+  # Node tolerations for be pod scheduling to nodes with taints
+  # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+  tolerations: []
+  #  - key: "key"
+  #    operator: "Equal|Exists"
+  #    value: "value"
+  #    effect: "NoSchedule|PreferNoSchedule|NoExecute(1.6 only)"
+
   resource:
     requests:
       cpu: 4
