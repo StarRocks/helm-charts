@@ -15,9 +15,27 @@ spec:
 {{- end }}
 {{- if .Values.starrocksFESpec.service.type }}
     service:
-{{- if .Values.starrocksFESpec.service.type }}
       type: {{ .Values.starrocksFESpec.service.type }}
 {{- end }}
+{{- if .Values.starrocksFESpec.serviceAccount }}
+    serviceAccount: {{ .Values.starrocksFESpec.serviceAccount }}
+{{- end }}
+    fsgroup: {{ .Values.starrocksFESpec.fsGroup }}
+{{- if .Values.starrocksFESpec.nodeSelector }}
+    nodeSelector:
+{{ toYaml .Values.starrocksFESpec.nodeSelector | indent 6 }}
+{{- end }}
+{{- if .Values.starrocksFESpec.feEnvVars }}
+    feEnvVars:
+{{ toYaml .Values.starrocksFESpec.feEnvVars | indent 6 }}
+{{- end }}
+{{- if .Values.starrocksFESpec.affinity }}
+    affinity:
+{{ toYaml .Values.starrocksFESpec.affinity | indent 6 }}
+{{- end }}
+{{- if .Values.starrocksFESpec.tolerations }}
+    tolerations:
+{{toYaml .Values.starrocksFESpec.tolerations | indent 6 }}
 {{- end }}
     configMapInfo:
       configMapName: {{template  "starrockscluster.fe.configmap.name" . }}
@@ -36,6 +54,26 @@ spec:
 {{- if .Values.starrocksBeSpec.resource }}
 {{ toYaml .Values.starrocksBeSpec.resource | indent 4 }}
 {{- end }}
+{{- if .Values.starrocksBeSpec.serviceAccount }}
+    serviceAccount: {{ .Values.starrocksBeSpec.serviceAccount }}
+{{- end }}
+    fsgroup: {{ .Values.starrocksBeSpec.fsGroup }}
+{{- if .Values.starrocksBeSpec.nodeSelector }}
+    nodeSelector:
+{{ toYaml .Values.starrocksBeSpec.nodeSelector | indent 6 }}
+{{- end }}
+{{- if .Values.starrocksBeSpec.feEnvVars }}
+    beEnvVars:
+{{ toYaml .Values.starrocksBeSpec.feEnvVars | indent 6 }}
+{{- end }}
+{{- if .Values.starrocksBeSpec.affinity }}
+    affinity:
+{{ toYaml .Values.starrocksBeSpec.affinity | indent 6 }}
+{{- end }}
+{{- if .Values.starrocksBeSpec.tolerations }}
+    tolerations:
+{{toYaml .Values.starrocksBeSpec.tolerations | indent 6 }}
+{{- end }}
     configMapInfo:
       configMapName: {{template "starrockscluster.be.configmap.name" . }}
       resolveKey: be.conf
@@ -50,7 +88,27 @@ spec:
 {{- if .Values.starrocksCluster.enabledCn }}
   starRocksCnSpec:
     image: "{{ .Values.starrocksCnSpec.image.repository }}:{{ .Values.starrocksCnSpec.image.tag }}"
-  {{- if and .Values.starrocksCluster.enabledCn .Values.starrocksCnSpec.autoScalingPolicy }}
+{{- if .Values.starrocksCnSpec.serviceAccount }}
+    serviceAccount: {{ .Values.starrocksCnSpec.serviceAccount }}
+{{- end }}
+    fsgroup: {{ .Values.starrocksCnSpec.fsGroup }}
+{{- if .Values.starrocksCnSpec.nodeSelector }}
+    nodeSelector:
+{{ toYaml .Values.starrocksCnSpec.nodeSelector | indent 6 }}
+{{- end }}
+{{- if .Values.starrocksCnSpec.feEnvVars }}
+    cnEnvVars:
+{{ toYaml .Values.starrocksCnSpec.feEnvVars | indent 6 }}
+{{- end }}
+{{- if .Values.starrocksCnSpec.affinity }}
+    affinity:
+{{ toYaml .Values.starrocksCnSpec.affinity | indent 6 }}
+{{- end }}
+{{- if .Values.starrocksCnSpec.tolerations }}
+    tolerations:
+{{toYaml .Values.starrocksCnSpec.tolerations | indent 6 }}
+{{- end }}
+{{- if and .Values.starrocksCluster.enabledCn .Values.starrocksCnSpec.autoScalingPolicy }}
     autoScalingPolicy:
 {{ toYaml .Values.starrocksCnSpec.autoScalingPolicy | indent 6 }}
   {{- end }}

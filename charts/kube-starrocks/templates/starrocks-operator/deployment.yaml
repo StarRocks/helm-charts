@@ -23,7 +23,7 @@ spec:
         runAsNonRoot: false
       containers:
       - command:
-        - /manager
+        - /sroperator
         args:
         - --leader-elect
         image: "{{ .Values.starrocksOperator.image.repository }}:{{ .Values.starrocksOperator.image.tag }}"
