@@ -20,7 +20,7 @@ spec:
 {{- if .Values.starrocksFESpec.serviceAccount }}
     serviceAccount: {{ .Values.starrocksFESpec.serviceAccount }}
 {{- end }}
-    fsgroup: {{ .Values.starrocksFESpec.fsGroup }}
+    fsGroup: {{ .Values.starrocksFESpec.fsGroup }}
 {{- if .Values.starrocksFESpec.nodeSelector }}
     nodeSelector:
 {{ toYaml .Values.starrocksFESpec.nodeSelector | indent 6 }}
@@ -57,7 +57,7 @@ spec:
 {{- if .Values.starrocksBeSpec.serviceAccount }}
     serviceAccount: {{ .Values.starrocksBeSpec.serviceAccount }}
 {{- end }}
-    fsgroup: {{ .Values.starrocksBeSpec.fsGroup }}
+    fsGroup: {{ .Values.starrocksBeSpec.fsGroup }}
 {{- if .Values.starrocksBeSpec.nodeSelector }}
     nodeSelector:
 {{ toYaml .Values.starrocksBeSpec.nodeSelector | indent 6 }}
@@ -91,7 +91,7 @@ spec:
 {{- if .Values.starrocksCnSpec.serviceAccount }}
     serviceAccount: {{ .Values.starrocksCnSpec.serviceAccount }}
 {{- end }}
-    fsgroup: {{ .Values.starrocksCnSpec.fsGroup }}
+    fsGroup: {{ .Values.starrocksCnSpec.fsGroup }}
 {{- if .Values.starrocksCnSpec.nodeSelector }}
     nodeSelector:
 {{ toYaml .Values.starrocksCnSpec.nodeSelector | indent 6 }}
