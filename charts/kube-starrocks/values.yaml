@@ -109,8 +109,10 @@ starrocksFESpec:
 
   # fe storageSpec for persistent meta data.
   storageSpec:
-    # the storageClass name for fe meta persistent volume. if name is empty used emptyDir.
+    # the name of volume for mount. if not will use emptyDir.
     name: ""
+    # the storageClassName represent the used storageclss name. if not set will use k8s cluster default storageclass.
+    storageClassName: ""
     #the persistent volume size default 1 Gi.
     storageSize: 1Gi
 
@@ -292,9 +294,10 @@ starrocksBeSpec:
       memory: 8Gi
   ## specify storageclass name and request size.
   storageSpec:
-    # the storageClass name for be data persistent volume. if name is empty used emptyDir.
+    # the name of volume for mount. if not will use emptyDir.
     name: ""
-    storageSize: 10Gi
+    # the storageClassName represent the used storageclss name. if not set will use k8s cluster default storageclass.
+    storageClassName: ""
 
   # the config for start be. the base information as follows.
   config: |

@@ -43,6 +43,7 @@ spec:
 {{- if .Values.starrocksFESpec.storageSpec.name }}
     storageVolumes:
     - name: {{ .Values.starrocksFESpec.storageSpec.name }}
+      storageClassName: {{ .Values.starrocksFESpec.storageSpec.storageClassName }}}
       storageSize: {{ .Values.starrocksFESpec.storageSpec.storageSize }}
       mountPath: {{template "starrockscluster.fe.meta.path" . }}
 {{- end }}
@@ -80,6 +81,7 @@ spec:
 {{- if .Values.starrocksBeSpec.storageSpec.name }}
     storageVolumes:
     - name: {{ .Values.starrocksBeSpec.storageSpec.name }}
+      storageClassName: {{ .Values.starrocksBeSpec.storageSpec.storageClassName }}
       storageSize: {{ .Values.starrocksBeSpec.storageSpec.storageSize }}
       mountPath: {{template "starrockscluster.be.data.path" . }}
 {{- end }}
