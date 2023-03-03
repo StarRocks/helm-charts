@@ -6,6 +6,10 @@ metadata:
   labels:
     cluster: {{ template "starrockscluster.name" . }}
 {{- include "kube-starrocks.labels" . | nindent 4 }}
+{{- if .Values.starrocksCluster.annotations }}
+  annotations:
+    {{ toYaml .Values.starrocksCluster.annotations | nindent 4 }}
+{{- end }}
 spec:
   starRocksFeSpec:
     image: "{{ .Values.starrocksFESpec.image.repository }}:{{ .Values.starrocksFESpec.image.tag }}"
@@ -38,14 +42,18 @@ spec:
 {{toYaml .Values.starrocksFESpec.tolerations | indent 6 }}
 {{- end }}
     configMapInfo:
-      configMapName: {{template  "starrockscluster.fe.configmap.name" . }}
+      configMapName: {{ template  "starrockscluster.fe.configmap.name" . }}
       resolveKey: fe.conf
 {{- if .Values.starrocksFESpec.storageSpec.name }}
     storageVolumes:
     - name: {{ .Values.starrocksFESpec.storageSpec.name }}
-      storageClassName: {{ .Values.starrocksFESpec.storageSpec.storageClassName }}}
+{{- if .Values.starrocksFESpec.storageSpec.storageClassName }}
+      storageClassName: {{ .Values.starrocksFESpec.storageSpec.storageClassName }}
+{{- end }}
+{{- if .Values.starrocksFESpec.storageSpec.storageSize }}
       storageSize: {{ .Values.starrocksFESpec.storageSpec.storageSize }}
-      mountPath: {{template "starrockscluster.fe.meta.path" . }}
+{{- end }}
+      mountPath: {{ template "starrockscluster.fe.meta.path" . }}
 {{- end }}
 
 {{- if .Values.starrocksBeSpec }}
@@ -63,9 +71,9 @@ spec:
     nodeSelector:
 {{ toYaml .Values.starrocksBeSpec.nodeSelector | indent 6 }}
 {{- end }}
-{{- if .Values.starrocksBeSpec.feEnvVars }}
+{{- if .Values.starrocksBeSpec.beEnvVars }}
     beEnvVars:
-{{ toYaml .Values.starrocksBeSpec.feEnvVars | indent 6 }}
+{{ toYaml .Values.starrocksBeSpec.beEnvVars | indent 6 }}
 {{- end }}
 {{- if .Values.starrocksBeSpec.affinity }}
     affinity:
@@ -81,8 +89,12 @@ spec:
 {{- if .Values.starrocksBeSpec.storageSpec.name }}
     storageVolumes:
     - name: {{ .Values.starrocksBeSpec.storageSpec.name }}
+{{- if .Values.starrocksBeSpec.storageSpec.storageClassName }}
       storageClassName: {{ .Values.starrocksBeSpec.storageSpec.storageClassName }}
+{{- end }}
+{{- if .Values.starrocksBeSpec.storageSpec.storageSize }}
       storageSize: {{ .Values.starrocksBeSpec.storageSpec.storageSize }}
+{{- end }}
       mountPath: {{template "starrockscluster.be.data.path" . }}
 {{- end }}
 {{- end }}
@@ -98,9 +110,9 @@ spec:
     nodeSelector:
 {{ toYaml .Values.starrocksCnSpec.nodeSelector | indent 6 }}
 {{- end }}
-{{- if .Values.starrocksCnSpec.feEnvVars }}
+{{- if .Values.starrocksCnSpec.cnEnvVars }}
     cnEnvVars:
-{{ toYaml .Values.starrocksCnSpec.feEnvVars | indent 6 }}
+{{ toYaml .Values.starrocksCnSpec.cnEnvVars | indent 6 }}
 {{- end }}
 {{- if .Values.starrocksCnSpec.affinity }}
     affinity:
@@ -113,7 +125,7 @@ spec:
 {{- if and .Values.starrocksCluster.enabledCn .Values.starrocksCnSpec.autoScalingPolicy }}
     autoScalingPolicy:
 {{ toYaml .Values.starrocksCnSpec.autoScalingPolicy | indent 6 }}
-  {{- end }}
+{{- end }}
 {{ toYaml .Values.starrocksCnSpec.resource | indent 4 }}
     configMapInfo:
       configMapName: {{template  "starrockscluster.cn.configmap.name" . }}
