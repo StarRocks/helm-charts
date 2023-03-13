@@ -31,7 +31,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
 {{- define "kube-starrocks.operator.serviceAccountName" -}}
-{{ default (include "kube-starrocks.name" .) .Values.starrocksOperator.serviceAccountName }}
+{{- print "starrocks" }}
 {{- end }}
 
 
