@@ -1,22 +1,20 @@
 # Default values for kube-starrocks.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-
 global:
   rbac:
     create: true
 
-# deploy operator in special namespace.
+# the starrockscluster crd' name.
 nameOverride: ""
 starrocksOperator:
   # provide a name for operator deployment.
   enabled: true
-  serviceAccountName: ""
   namespaceOverride: ""
   image:
-    registry: hub.docker
+    # image sliced by "repository:tag"
     repository: starrocks/operator
-    tag: v1.3
+    tag: latest
   resources:
     limits:
       cpu: 500m
@@ -44,7 +42,7 @@ starrocksFESpec:
   # Number of replicas to deploy for a fe statefulset.
   replicas: 1
   image:
-    registry: hub.docker
+    # image sliced by "repository:tag"
     repository: starrocks/fe-ubuntu
     tag: 2.5.0-fix-uid
   # A special supplemental group that applies to all containers in a pod. Some volume types allow the Kubelet to change the ownership of that volume to be owned by the pod:
@@ -56,8 +54,15 @@ starrocksFESpec:
   service:
     # the fe service type, only supported ClusterIP, NodePort, LoadBalancer, ExternalName
     type: "ClusterIP"
+    # the loadbalancerIP for static ip config when the type=LoadBalancer and loadbalancerIp is not empty.
+    loadbalancerIP: ""
+
+  # contains the secret name
+  imagePullSecrets: []
+  # - name: "image-pull-secret"
+
   # serviceAccount for fe access cloud service.
-  #serviceAccount: starrocks
+  serviceAccount: ""
 
   # If specified, the pod's nodeSelector，displayName="Map of nodeSelectors to match when scheduling pods on nodes"
   # Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
@@ -133,7 +138,7 @@ starrocksFESpec:
 ## spec for compute node, compute node provide compute function.
 starrocksCnSpec:
   image:
-    registry: hub.docker
+    # image sliced by "repository:tag"
     repository: starrocks/be-ubuntu
     tag: 2.5.0
   # serviceAccount for cn access cloud service.
@@ -142,6 +147,21 @@ starrocksCnSpec:
   # A special supplemental group that applies to all containers in a pod. Some volume types allow the Kubelet to change the ownership of that volume to be owned by the pod:
   # Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#configure-volume-permission-and-ownership-change-policy-for-pods
   fsGroup: 1000
+
+  # specify the service name and port config and serviceType
+  # the service type refer https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+  service:
+    # the fe service type, only supported ClusterIP, NodePort, LoadBalancer, ExternalName
+    type: "ClusterIP"
+    # the loadbalancerIP for static ip config when the type=LoadBalancer and loadbalancerIp is not empty.
+    loadbalancerIP: ""
+
+  # contains the secret name
+  imagePullSecrets: []
+  # - name: "image-pull-secret"
+
+  # serviceAccount for fe access cloud service.
+  serviceAccount: ""
 
   # If specified, the pod's nodeSelector，displayName="Map of nodeSelectors to match when scheduling pods on nodes"
   # Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
@@ -197,7 +217,7 @@ starrocksCnSpec:
   #            type: Utilization
   #      - type: Resource
   #        resource:
-  #          
+  #
   #          name: cpu
   #          target:
   #            averageUtilization: 30
@@ -234,7 +254,7 @@ starrocksBeSpec:
   ## Number of replicas to deploy for a be statefulset.
   replicas: 1
   image:
-    registry: hub.docker
+    # image sliced by "repository:tag"
     repository: starrocks/be-ubuntu
     tag: 2.5.0-fix-uid
   ## serviceAccount for be access cloud service.
@@ -243,6 +263,21 @@ starrocksBeSpec:
   # A special supplemental group that applies to all containers in a pod. Some volume types allow the Kubelet to change the ownership of that volume to be owned by the pod:
   # Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#configure-volume-permission-and-ownership-change-policy-for-pods
   fsGroup: 1000
+
+  # specify the service name and port config and serviceType
+  # the service type refer https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+  service:
+    # the fe service type, only supported ClusterIP, NodePort, LoadBalancer, ExternalName
+    type: "ClusterIP"
+    # the loadbalancerIP for static ip config when the type=LoadBalancer and loadbalancerIp is not empty.
+    loadbalancerIP: ""
+
+  # contains the secret name
+  imagePullSecrets: []
+  # - name: "image-pull-secret"
+
+  # serviceAccount for fe access cloud service.
+  serviceAccount: ""
 
   # If specified, the pod's nodeSelector，displayName="Map of nodeSelectors to match when scheduling pods on nodes"
   # Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
