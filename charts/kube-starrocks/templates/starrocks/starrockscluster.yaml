@@ -154,7 +154,6 @@ spec:
 {{- end }}
 {{- if .Values.starrocksCnSpec.resource }}
 {{ toYaml .Values.starrocksCnSpec.resource | indent 4 }}
-
 {{- end }}
 {{- if .Values.starrocksCnSpec.service.type }}
     service:
