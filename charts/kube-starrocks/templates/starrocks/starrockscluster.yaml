@@ -24,6 +24,10 @@ spec:
       loadBalancerIP: {{ .Values.starrocksFESpec.service.loadbalancerIP }}
 {{- end }}
 {{- end }}
+{{- if .Values.starrocksFESpec.annotations }}
+    annotations:
+{{ toYaml .Values.starrocksFESpec.annotations | indent 6 }}
+{{- end }}
 {{- if .Values.starrocksFESpec.imagePullSecrets }}
     imagePullSecrets:
 {{toYaml .Values.starrocksFESpec.imagePullSecrets | indent 6 }}
@@ -76,6 +80,10 @@ spec:
 {{- if and (eq "LoadBalancer" .Values.starrocksBeSpec.service.type) .Values.starrocksBeSpec.service.loadbalancerIP }}
       loadBalancerIP: {{ .Values.starrocksBeSpec.service.loadbalancerIP }}
 {{- end }}
+{{- end }}
+{{- if .Values.starrocksBeSpec.annotations }}
+    annotations:
+{{ toYaml .Values.starrocksBeSpec.annotations | indent 6 }}
 {{- end }}
 {{- if .Values.starrocksBeSpec.imagePullSecrets }}
     imagePullSecrets:
@@ -146,6 +154,7 @@ spec:
 {{- end }}
 {{- if .Values.starrocksCnSpec.resource }}
 {{ toYaml .Values.starrocksCnSpec.resource | indent 4 }}
+
 {{- end }}
 {{- if .Values.starrocksCnSpec.service.type }}
     service:
@@ -153,6 +162,10 @@ spec:
 {{- if and (eq "LoadBalancer" .Values.starrocksCnSpec.service.type) .Values.starrocksCnSpec.service.loadbalancerIP }}
       loadBalancerIP: {{ .Values.starrocksCnSpec.service.loadbalancerIP }}
 {{- end }}
+{{- end }}
+{{- if .Values.starrocksCnSpec.annotations }}
+    annotations:
+{{ toYaml .Values.starrocksCnSpec.annotations | indent 6 }}
 {{- end }}
 {{- if .Values.starrocksCnSpec.imagePullSecrets }}
     imagePullSecrets:
