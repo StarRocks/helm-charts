@@ -44,14 +44,14 @@ starrocksFESpec:
   image:
     # image sliced by "repository:tag"
     repository: starrocks/fe-ubuntu
-    tag: 2.5.0-fix-uid
+    tag: 2.5.4
 
   # add annotations for fe pods. example, if you want to config monitor for datadog, you can config the annotations. etc...
   annotations: {}
 
   # A special supplemental group that applies to all containers in a pod. Some volume types allow the Kubelet to change the ownership of that volume to be owned by the pod:
   # Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#configure-volume-permission-and-ownership-change-policy-for-pods
-  fsGroup: 1000
+  fsGroup: 0
 
   # specify the service name and port config and serviceType
   # the service type refer https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
@@ -143,8 +143,8 @@ starrocksFESpec:
 starrocksCnSpec:
   image:
     # image sliced by "repository:tag"
-    repository: starrocks/be-ubuntu
-    tag: 2.5.0
+    repository: starrocks/cn-ubuntu
+    tag: 2.5.4
   # serviceAccount for cn access cloud service.
   #serviceAccount: starrocks
 
@@ -153,7 +153,7 @@ starrocksCnSpec:
 
   # A special supplemental group that applies to all containers in a pod. Some volume types allow the Kubelet to change the ownership of that volume to be owned by the pod:
   # Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#configure-volume-permission-and-ownership-change-policy-for-pods
-  fsGroup: 1000
+  fsGroup: 0
 
   # specify the service name and port config and serviceType
   # the service type refer https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
@@ -263,7 +263,7 @@ starrocksBeSpec:
   image:
     # image sliced by "repository:tag"
     repository: starrocks/be-ubuntu
-    tag: 2.5.0-fix-uid
+    tag: 2.5.4
   ## serviceAccount for be access cloud service.
   #serviceAccount: starrocks
 
@@ -272,7 +272,7 @@ starrocksBeSpec:
 
   # A special supplemental group that applies to all containers in a pod. Some volume types allow the Kubelet to change the ownership of that volume to be owned by the pod:
   # Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#configure-volume-permission-and-ownership-change-policy-for-pods
-  fsGroup: 1000
+  fsGroup: 0
 
   # specify the service name and port config and serviceType
   # the service type refer https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
