@@ -1,4 +1,4 @@
-apiVersion: starrocks.com/v1alpha1
+apiVersion: starrocks.com/{{ .Values.global.crdVersion }}}
 kind: StarRocksCluster
 metadata:
   name: {{ template "starrockscluster.name" . }}
@@ -39,6 +39,10 @@ spec:
 {{- if .Values.starrocksFESpec.nodeSelector }}
     nodeSelector:
 {{ toYaml .Values.starrocksFESpec.nodeSelector | indent 6 }}
+{{- end }}
+{{- if .Values.starrocksFESpec.podLabels }}
+    podLabels:
+{{toYaml .Values.starrocksFESpec.podLabels | indent 6 }}
 {{- end }}
 {{- if .Values.starrocksFESpec.feEnvVars }}
     feEnvVars:
@@ -93,6 +97,10 @@ spec:
     serviceAccount: {{ .Values.starrocksBeSpec.serviceAccount }}
 {{- end }}
     fsGroup: {{ .Values.starrocksBeSpec.fsGroup }}
+{{- if .Values.starrocksFESpec.podLabels }}
+    podLabels:
+{{toYaml .Values.starrocksFESpec.podLabels | indent 6 }}
+{{- end }}
 {{- if .Values.starrocksBeSpec.nodeSelector }}
     nodeSelector:
 {{ toYaml .Values.starrocksBeSpec.nodeSelector | indent 6 }}
@@ -132,6 +140,10 @@ spec:
     serviceAccount: {{ .Values.starrocksCnSpec.serviceAccount }}
 {{- end }}
     fsGroup: {{ .Values.starrocksCnSpec.fsGroup }}
+{{- if .Values.starrocksFESpec.podLabels }}
+    podLabels:
+{{toYaml .Values.starrocksFESpec.podLabels | indent 6 }}
+{{- end }}
 {{- if .Values.starrocksCnSpec.nodeSelector }}
     nodeSelector:
 {{ toYaml .Values.starrocksCnSpec.nodeSelector | indent 6 }}

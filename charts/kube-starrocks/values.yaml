@@ -4,6 +4,10 @@
 global:
   rbac:
     create: true
+  # set the starrockscluster CRD version. from operator v1.6 we have supported v1 CRD and as default CRD version. but the v1alpha1 also supported.
+  # in future v1alpha1 as verify CRD, when the ability is stable will be added into v1.
+  # supported value: v1, v1alpha1
+  crdVersion: v1
 
 # the starrockscluster crd' name.
 nameOverride: ""
@@ -73,6 +77,9 @@ starrocksFESpec:
   nodeSelector: {}
   #  beta.kubernetes.io/arch: amd64
   #  beta.kubernetes.io/os: linux
+
+  # the pod labels for user select or classify pods.
+  podLabels: {}
 
   # Additional fe container environment variables
   # You specify this manually like you would a raw deployment manifest.
@@ -175,6 +182,9 @@ starrocksCnSpec:
   nodeSelector: {}
   #  beta.kubernetes.io/arch: amd64
   #  beta.kubernetes.io/os: linux
+
+  # the pod labels for user select or classify pods.
+  podLabels: {}
 
   # Additional cn container environment variables
   # You specify this manually like you would a raw deployment manifest.
@@ -294,6 +304,9 @@ starrocksBeSpec:
   nodeSelector: {}
   #  beta.kubernetes.io/arch: amd64
   #  beta.kubernetes.io/os: linux
+
+  # the pod labels for user select or classify pods.
+  podLabels: {}
 
   # Additional be container environment variables
   # You specify this manually like you would a raw deployment manifest.
