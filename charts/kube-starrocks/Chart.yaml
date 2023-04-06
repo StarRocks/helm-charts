@@ -29,7 +29,7 @@ version: 1.5.0
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
-appVersion: 2.5.0-fix-uid
+appVersion: 2.5.4
 
 kubeVersion: ">=1.18.3-0"
 
