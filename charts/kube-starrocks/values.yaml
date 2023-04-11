@@ -81,6 +81,12 @@ starrocksFESpec:
   # the pod labels for user select or classify pods.
   podLabels: {}
 
+  ## hostAliases allows adding entries to /etc/hosts inside the containers
+  hostAliases: []
+  # - ip: "127.0.0.1"
+  #   hostnames:
+  #   - "example.com"
+
   # Additional fe container environment variables
   # You specify this manually like you would a raw deployment manifest.
   # This means you can bind in environment variables from secrets.
@@ -102,11 +108,11 @@ starrocksFESpec:
   #  nodeAffinity:
   #    requiredDuringSchedulingIgnoredDuringExecution:
   #      nodeSelectorTerms:
-  #        - matchFields:
-  #            - key: metadata.name
-  #              operator: In
-  #              values:
-  #                - target-host-name
+  #      - matchFields:
+  #        - key: metadata.name
+  #          operator: In
+  #          values:
+  #          - target-host-name
 
   # Node tolerations for fe pod scheduling to nodes with taints
   # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
@@ -186,6 +192,12 @@ starrocksCnSpec:
   # the pod labels for user select or classify pods.
   podLabels: {}
 
+  ## hostAliases allows adding entries to /etc/hosts inside the containers
+  hostAliases: []
+  # - ip: "127.0.0.1"
+  #   hostnames:
+  #   - "example.com"
+
   # Additional cn container environment variables
   # You specify this manually like you would a raw deployment manifest.
   # This means you can bind in environment variables from secrets.
@@ -226,25 +238,24 @@ starrocksCnSpec:
   #  minReplicas: 1
   #  hpaPolicy:
   #    metrics:
-  #      - type: Resource
-  #        resource:
-  #          name: memory
-  #          target:
-  #            averageUtilization: 30
-  #            type: Utilization
-  #      - type: Resource
-  #        resource:
-  #
-  #          name: cpu
-  #          target:
-  #            averageUtilization: 30
-  #            type: Utilization
+  #    - type: Resource
+  #      resource:
+  #        name: memory
+  #        target:
+  #          averageUtilization: 30
+  #          type: Utilization
+  #    - type: Resource
+  #      resource:
+  #        name: cpu
+  #        target:
+  #          averageUtilization: 30
+  #          type: Utilization
   #    behavior:
   #      scaleUp:
   #        policies:
-  #          - type: Pods
-  #            value: 1
-  #            periodSeconds: 10
+  #        - type: Pods
+  #          value: 1
+  #          periodSeconds: 10
   #      scaleDown:
   #        selectPolicy: Disabled
 
@@ -308,6 +319,12 @@ starrocksBeSpec:
   # the pod labels for user select or classify pods.
   podLabels: {}
 
+  ## hostAliases allows adding entries to /etc/hosts inside the containers
+  hostAliases: []
+  # - ip: "127.0.0.1"
+  #   hostnames:
+  #   - "example.com"
+  
   # Additional be container environment variables
   # You specify this manually like you would a raw deployment manifest.
   # This means you can bind in environment variables from secrets.
@@ -330,11 +347,11 @@ starrocksBeSpec:
   #  nodeAffinity:
   #    requiredDuringSchedulingIgnoredDuringExecution:
   #      nodeSelectorTerms:
-  #        - matchFields:
-  #            - key: metadata.name
-  #              operator: In
-  #              values:
-  #                - target-host-name
+  #      - matchFields:
+  #        - key: metadata.name
+  #          operator: In
+  #          values:
+  #          - target-host-name
 
   # Node tolerations for be pod scheduling to nodes with taints
   # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
