@@ -1,4 +1,4 @@
-apiVersion: starrocks.com/{{ .Values.global.crdVersion }}}
+apiVersion: starrocks.com/{{ .Values.global.crdVersion }}
 kind: StarRocksCluster
 metadata:
   name: {{ template "starrockscluster.name" . }}
