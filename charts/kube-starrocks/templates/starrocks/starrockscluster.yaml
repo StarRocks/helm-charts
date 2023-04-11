@@ -1,4 +1,4 @@
-apiVersion: starrocks.com/{{ .Values.global.crdVersion }}}
+apiVersion: starrocks.com/{{ .Values.global.crdVersion }}
 kind: StarRocksCluster
 metadata:
   name: {{ template "starrockscluster.name" . }}
@@ -30,7 +30,7 @@ spec:
 {{- end }}
 {{- if .Values.starrocksFESpec.imagePullSecrets }}
     imagePullSecrets:
-{{toYaml .Values.starrocksFESpec.imagePullSecrets | indent 6 }}
+{{toYaml .Values.starrocksFESpec.imagePullSecrets | indent 4 }}
 {{- end }}
 {{- if .Values.starrocksFESpec.serviceAccount }}
     serviceAccount: {{ .Values.starrocksFESpec.serviceAccount }}
@@ -44,9 +44,13 @@ spec:
     podLabels:
 {{toYaml .Values.starrocksFESpec.podLabels | indent 6 }}
 {{- end }}
+{{- if .Values.starrocksFESpec.hostAliases }}
+    hostAliases:
+{{toYaml .Values.starrocksFESpec.hostAliases | indent 4 }}
+{{- end }}
 {{- if .Values.starrocksFESpec.feEnvVars }}
     feEnvVars:
-{{ toYaml .Values.starrocksFESpec.feEnvVars | indent 6 }}
+{{ toYaml .Values.starrocksFESpec.feEnvVars | indent 4 }}
 {{- end }}
 {{- if .Values.starrocksFESpec.affinity }}
     affinity:
@@ -54,7 +58,7 @@ spec:
 {{- end }}
 {{- if .Values.starrocksFESpec.tolerations }}
     tolerations:
-{{toYaml .Values.starrocksFESpec.tolerations | indent 6 }}
+{{toYaml .Values.starrocksFESpec.tolerations | indent 4 }}
 {{- end }}
     configMapInfo:
       configMapName: {{ template  "starrockscluster.fe.configmap.name" . }}
@@ -91,15 +95,19 @@ spec:
 {{- end }}
 {{- if .Values.starrocksBeSpec.imagePullSecrets }}
     imagePullSecrets:
-{{toYaml .Values.starrocksBeSpec.imagePullSecrets | indent 6 }}
+{{toYaml .Values.starrocksBeSpec.imagePullSecrets | indent 4 }}
 {{- end }}
 {{- if .Values.starrocksBeSpec.serviceAccount }}
     serviceAccount: {{ .Values.starrocksBeSpec.serviceAccount }}
 {{- end }}
     fsGroup: {{ .Values.starrocksBeSpec.fsGroup }}
-{{- if .Values.starrocksFESpec.podLabels }}
+{{- if .Values.starrocksBeSpec.podLabels }}
     podLabels:
-{{toYaml .Values.starrocksFESpec.podLabels | indent 6 }}
+{{toYaml .Values.starrocksBeSpec.podLabels | indent 6 }}
+{{- end }}
+{{- if .Values.starrocksBeSpec.hostAliases }}
+    hostAliases:
+{{toYaml .Values.starrocksBeSpec.hostAliases | indent 4 }}
 {{- end }}
 {{- if .Values.starrocksBeSpec.nodeSelector }}
     nodeSelector:
@@ -107,7 +115,7 @@ spec:
 {{- end }}
 {{- if .Values.starrocksBeSpec.beEnvVars }}
     beEnvVars:
-{{ toYaml .Values.starrocksBeSpec.beEnvVars | indent 6 }}
+{{ toYaml .Values.starrocksBeSpec.beEnvVars | indent 4 }}
 {{- end }}
 {{- if .Values.starrocksBeSpec.affinity }}
     affinity:
@@ -115,7 +123,7 @@ spec:
 {{- end }}
 {{- if .Values.starrocksBeSpec.tolerations }}
     tolerations:
-{{toYaml .Values.starrocksBeSpec.tolerations | indent 6 }}
+{{toYaml .Values.starrocksBeSpec.tolerations | indent 4 }}
 {{- end }}
     configMapInfo:
       configMapName: {{template "starrockscluster.be.configmap.name" . }}
@@ -140,9 +148,13 @@ spec:
     serviceAccount: {{ .Values.starrocksCnSpec.serviceAccount }}
 {{- end }}
     fsGroup: {{ .Values.starrocksCnSpec.fsGroup }}
-{{- if .Values.starrocksFESpec.podLabels }}
+{{- if .Values.starrocksCnSpec.podLabels }}
     podLabels:
-{{toYaml .Values.starrocksFESpec.podLabels | indent 6 }}
+{{toYaml .Values.starrocksCnSpec.podLabels | indent 6 }}
+{{- end }}
+{{- if .Values.starrocksCnSpec.hostAliases }}
+    hostAliases:
+{{toYaml .Values.starrocksCnSpec.hostAliases | indent 4 }}
 {{- end }}
 {{- if .Values.starrocksCnSpec.nodeSelector }}
     nodeSelector:
@@ -150,7 +162,7 @@ spec:
 {{- end }}
 {{- if .Values.starrocksCnSpec.cnEnvVars }}
     cnEnvVars:
-{{ toYaml .Values.starrocksCnSpec.cnEnvVars | indent 6 }}
+{{ toYaml .Values.starrocksCnSpec.cnEnvVars | indent 4 }}
 {{- end }}
 {{- if .Values.starrocksCnSpec.affinity }}
     affinity:
@@ -158,7 +170,7 @@ spec:
 {{- end }}
 {{- if .Values.starrocksCnSpec.tolerations }}
     tolerations:
-{{toYaml .Values.starrocksCnSpec.tolerations | indent 6 }}
+{{toYaml .Values.starrocksCnSpec.tolerations | indent 4 }}
 {{- end }}
 {{- if and .Values.starrocksCluster.enabledCn .Values.starrocksCnSpec.autoScalingPolicy }}
     autoScalingPolicy:
@@ -180,7 +192,7 @@ spec:
 {{- end }}
 {{- if .Values.starrocksCnSpec.imagePullSecrets }}
     imagePullSecrets:
-{{toYaml .Values.starrocksCnSpec.imagePullSecrets | indent 6 }}
+{{toYaml .Values.starrocksCnSpec.imagePullSecrets | indent 4 }}
 {{- end }}
     configMapInfo:
       configMapName: {{template  "starrockscluster.cn.configmap.name" . }}
