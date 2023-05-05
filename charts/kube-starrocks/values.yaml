@@ -48,7 +48,7 @@ starrocksFESpec:
   image:
     # image sliced by "repository:tag"
     repository: starrocks/fe-ubuntu
-    tag: 2.5.4
+    tag: 2.5.5
 
   # add annotations for fe pods. example, if you want to config monitor for datadog, you can config the annotations. etc...
   annotations: {}
@@ -157,7 +157,7 @@ starrocksCnSpec:
   image:
     # image sliced by "repository:tag"
     repository: starrocks/cn-ubuntu
-    tag: 2.5.4
+    tag: 2.5.5
   # serviceAccount for cn access cloud service.
   #serviceAccount: starrocks
 
@@ -284,7 +284,7 @@ starrocksBeSpec:
   image:
     # image sliced by "repository:tag"
     repository: starrocks/be-ubuntu
-    tag: 2.5.4
+    tag: 2.5.5
   ## serviceAccount for be access cloud service.
   #serviceAccount: starrocks
 
