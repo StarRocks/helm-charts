@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: test-webhook-cleanup
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": pre-delete
+    "helm.sh/hook-delete-policy": hook-succeeded
+  labels:
+    app: test
+spec:
+  template:
+    metadata:
+      name: test-webhook-cleanup
+      labels:
+        app: test
+    spec:
+      serviceAccountName: starrocks
+      containers:
+        - name: kubectl
+          {{- /* bitnami maintains an image for all k8s versions */}}
+          {{- /* see: https://hub.docker.com/r/bitnami/kubectl */}}
+          image: bitnami/kubectl:latest
+          command:
+          - /bin/sh
+          - -c
+          - >
+              kubectl delete src kube-starrocks || true;
+      restartPolicy: OnFailure
