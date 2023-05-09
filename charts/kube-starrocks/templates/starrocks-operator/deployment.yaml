@@ -27,7 +27,7 @@ spec:
         args:
         - --leader-elect
         image: "{{ .Values.starrocksOperator.image.repository }}:{{ .Values.starrocksOperator.image.tag }}"
-        imagePullPolicy: Always
+        imagePullPolicy: {{ .Values.starrocksOperator.imagePullPolicy }}
         name: manager
         securityContext:
           allowPrivilegeEscalation: false

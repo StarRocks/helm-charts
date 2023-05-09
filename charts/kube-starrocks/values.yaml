@@ -19,6 +19,7 @@ starrocksOperator:
     # image sliced by "repository:tag"
     repository: starrocks/operator
     tag: latest
+  imagePullPolicy: Always
   resources:
     limits:
       cpu: 500m
