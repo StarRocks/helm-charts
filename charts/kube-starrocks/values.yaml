@@ -19,7 +19,6 @@ starrocksOperator:
     # image sliced by "repository:tag"
     repository: starrocks/operator
     tag: latest
-  imagePullPolicy: Always
   resources:
     limits:
       cpu: 500m
@@ -49,7 +48,7 @@ starrocksFESpec:
   image:
     # image sliced by "repository:tag"
     repository: starrocks/fe-ubuntu
-    tag: 2.5.5
+    tag: 2.5.4
 
   # add annotations for fe pods. example, if you want to config monitor for datadog, you can config the annotations. etc...
   annotations: {}
@@ -139,6 +138,8 @@ starrocksFESpec:
     storageClassName: ""
     #the persistent volume size default 1 Gi.
     storageSize: 1Gi
+    # Setting this parameter can persist log storage
+    logStorageSize: 1Gi
 
   # the config for start fe. the base information as follows.
   config: |
@@ -158,7 +159,7 @@ starrocksCnSpec:
   image:
     # image sliced by "repository:tag"
     repository: starrocks/cn-ubuntu
-    tag: 2.5.5
+    tag: 2.5.4
   # serviceAccount for cn access cloud service.
   #serviceAccount: starrocks
 
@@ -285,7 +286,7 @@ starrocksBeSpec:
   image:
     # image sliced by "repository:tag"
     repository: starrocks/be-ubuntu
-    tag: 2.5.5
+    tag: 2.5.4
   ## serviceAccount for be access cloud service.
   #serviceAccount: starrocks
 
@@ -377,6 +378,8 @@ starrocksBeSpec:
     # you must set name when you set storageClassName
     storageClassName: ""
     storageSize: 1Ti
+    # Setting this parameter can persist log storage
+    logStorageSize: 1Gi
 
   # the config for start be. the base information as follows.
   config: |
