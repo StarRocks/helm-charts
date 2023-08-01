@@ -1,3 +1,9 @@
+# 🔴 ❗IMPORTANT
+
+**ARCHIVE NOTIFICATION**
+
+The chart has been merged into https://github.com/StarRocks/starrocks-kubernetes-operator/tree/main/helm-charts, hence this repository is in archive status, please find the latest update at the new repository.
+
 # StarRocks Kubernetes Helm Charts
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Release Charts](https://img.shields.io/badge/Release-helmcharts-green.svg)](https://github.com/StarRocks/helm-charts/releases)
 
